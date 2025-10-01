@@ -1,0 +1,4 @@
+input[type=radio]{
+    display: inline !important;
+    float: left;
+}

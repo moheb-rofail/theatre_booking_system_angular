@@ -1,0 +1,24 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Number</th>
+            <th>User Id</th>
+            <th>Price</th>
+            <th>Seat #</th>
+            <th>Created At</th>
+            <th></th>
+        </tr>
+    </thead>
+    @for(booking of bookings(); track booking.id){
+        <tr>
+            <td>{{booking.party_date}}</td>
+            <td>{{booking.party_number}}</td>
+            <td>{{booking.user_id}}</td>
+            <td>{{booking.price}}</td>
+            <td>{{booking.seat_number}}</td>
+            <td>{{booking.created_at}}</td>
+            <td><a class="btn btn-info" [routerLink]="['/booking/', booking.id]">Show</a></td>
+        </tr>
+    }
+</table>
