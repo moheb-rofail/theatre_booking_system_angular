@@ -1,11 +1,8 @@
 <form [formGroup]="bookForm" (ngSubmit)="order()">
     <div class="form-group">
         <label>Seat Number</label>
-
-        <!-- الصفوف -->
         @for (row of [].constructor(rows); let r = $index; track $index) {
         <div class="row">
-            <!-- الكراسي داخل كل صف -->
             @for (seat of seats.slice(r * cols, (r + 1) * cols); track seat.id) {
             <button type="button" class="seat {{ seat.status }}" (click)="selectSeat(seat)">
                 {{ seat.id }}
@@ -13,8 +10,6 @@
             }
         </div>
         }
-
     </div>
-
     <button type="submit" class="btn btn-primary">Confirm Order</button>
 </form>

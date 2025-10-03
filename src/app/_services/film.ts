@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { IFilm } from '../_interfaces/ifilm';
+
+interface FilmResponse {
+  current_page: number;
+  data: IFilm[];
+  last_page: number;
+  total: number;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FilmService {
+  private apiUrl = 'http://127.0.0.1:8000/api/bookings';
+
+  constructor(private http: HttpClient) {}
+
+  getFilms(): Observable<IFilm[]> {
+    return this.http.get<FilmResponse>(this.apiUrl).pipe(   //get all films
+      map(response => response.data)
+    );
+  }
+
+  getFilmById(id: number): Observable<IFilm> {
+    return this.http.get<IFilm>(`${this.apiUrl}/${id}`);   //get one film by id (i don't use it now)
+  }
+}

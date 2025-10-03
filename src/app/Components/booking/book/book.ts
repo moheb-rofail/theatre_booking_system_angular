@@ -16,8 +16,8 @@ export class Book {
     //extras: new FormControl('')
   });
 
-  rows = 10; // عدد الصفوف
-  cols = 5;  // عدد الأعمدة
+  rows = 10; 
+  cols = 5; 
   seats: { id: number, status: string }[] = [];
 
   constructor(private fb: FormBuilder) {
@@ -25,7 +25,6 @@ export class Book {
       seat_number: ['']
     });
 
-    // إنشاء 50 كرسي مرقمين من 1 لـ 50
     for (let i = 1; i <= this.rows * this.cols; i++) {
       this.seats.push({ id: i, status: 'available' });
     }

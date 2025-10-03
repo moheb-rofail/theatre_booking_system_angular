@@ -1,1 +1,15 @@
-<p>home works!</p>
+<div class="film-list">
+  @for (film of films; track film.id) {
+    <div class="film-card">
+      <img [src]="film.poster" alt="{{ film.title }}" class="film-poster"/>
+      <div class="film-details">
+        <h3>{{ film.title }}</h3>
+        <p><strong>Description:</strong> {{ film.description }}</p>
+        <p><strong>Type:</strong> {{ film.TypeOfFilm }}</p>
+        <p><strong>Duration:</strong> {{ film.duration }} mins</p>
+        <p><small>Created: {{ film.created_at | date:'medium' }}</small></p>
+        <button (click)="selectFilm(film)">Select Film</button>
+      </div>
+    </div>
+  }
+</div>

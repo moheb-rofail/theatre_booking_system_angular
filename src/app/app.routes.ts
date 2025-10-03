@@ -5,8 +5,9 @@ import { ShowBooking } from './Components/booking/show-booking/show-booking';
 import { Book } from './Components/booking/book/book';
 
 export const routes: Routes = [
-    {path:'', component:Home},
-    {path:'admin/allBookings', component:AllBookings},
-    {path:'booking/:id', component:ShowBooking},
-    {path:'book', component:Book}
+  { path: '', component: Home },
+  { path: 'admin/allBookings', component: AllBookings },
+  { path: 'booking/:id', component: ShowBooking },
+  { path: 'book', component: Book }
 ];
+

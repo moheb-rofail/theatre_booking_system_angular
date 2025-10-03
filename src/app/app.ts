@@ -1,14 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UserNav } from './Components/user-nav/user-nav';
+import { CommonModule } from '@angular/common';
 import { AdminNav } from './Components/Admin/admin-nav/admin-nav';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, UserNav, AdminNav],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, AdminNav],
   templateUrl: './app.html',
-  styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('project');
-}
+export class App {}
+
