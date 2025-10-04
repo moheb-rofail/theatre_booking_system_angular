@@ -15,17 +15,17 @@ interface FilmResponse {
   providedIn: 'root'
 })
 export class Film {
-  private apiUrl = 'http://127.0.0.1:8000/api/bookings';
+  private apiUrl = 'http://127.0.0.1:8000/api/movies';
 
   constructor(private http: HttpClient) {}
 
   getFilms(): Observable<IFilm[]> {
-    return this.http.get<FilmResponse>(this.apiUrl).pipe(   //get all films
-      map(response => response.data)
-    );
+    return this.http.get<IFilm[]>(this.apiUrl);
   }
 
   getFilmById(id: number): Observable<IFilm> {
     return this.http.get<IFilm>(`${this.apiUrl}/${id}`);   //get one film by id (i don't use it now)
   }
+
+  //film = this.getFilmById()
 }

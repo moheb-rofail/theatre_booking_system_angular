@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Booking } from '../../_services/booking';
+import { IBooking } from '../../_interfaces/ibooking';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-summary',
@@ -15,6 +18,9 @@ export class Summary implements OnInit {
   extras: any[] = [];
   total = 0;
 
+  booking!:IBooking;
+
+  private BookingService = inject(Booking);
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
@@ -27,14 +33,34 @@ export class Summary implements OnInit {
       this.total = +params['total'];
       this.extras = params['extras'] ? JSON.parse(params['extras']) : [];
 
-      // console.log('Film:', this.film);
-      // console.log('Seats:', this.seats);
-      // console.log('Extras:', this.extras);
-      // console.log('Total:', this.total);
+      console.log('Film:', this.film);
+      console.log('Seats:', this.seats);
+      console.log('Extras:', this.extras);
+      console.log('Total:', this.total);
     });
   }
 
+  bookings: IBooking[] = [];
+
   confirmBooking() {
-    this.router.navigate(['/success']); // Done of reservation
+    const requests = this.seats.map(seat => {
+      var booking = {
+        price: this.total,
+        seat_number: seat,
+        user_id: 1,
+        movie_id: 1,
+        party_date: '2024-12-02',
+        party_number: 'first'
+      };
+
+      this.bookings.push(booking);
+    });
+
+    this.bookings.forEach(element => {
+      this.BookingService.addBooking(element).subscribe({
+        next: (res) => console.log('Booking added:', res),
+        error: (err) => console.error('Error:', err)
+      });
+    });
   }
 }

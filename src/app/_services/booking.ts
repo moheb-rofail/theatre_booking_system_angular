@@ -29,4 +29,9 @@ export class Booking {
   getBooking(id: number): Observable<IBooking> {
     return this.http.get<IBooking>(`http://127.0.0.1:8000/api/bookings/${id}`);
   }
+
+  addBooking(data: any): Observable<any> {
+    console.log(data);
+    return this.http.post(`http://127.0.0.1:8000/api/bookings/`, data);
+  }
 }
