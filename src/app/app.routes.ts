@@ -3,11 +3,17 @@ import { AllBookings } from './Components/Admin/all-bookings/all-bookings';
 import { Home } from './Components/home/home';
 import { ShowBooking } from './Components/booking/show-booking/show-booking';
 import { Book } from './Components/booking/book/book';
+import { Extras } from './Components/extras/extras';
+import { Summary } from './Components/summary/summary';
+import { Success } from './Components/success/success';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'admin/allBookings', component: AllBookings },
   { path: 'booking/:id', component: ShowBooking },
-  { path: 'book', component: Book }
+  { path: 'book/:id', component: Book },
+  { path: 'extras', component: Extras },
+  { path: 'summary', component: Summary },
+  { path: 'success', component: Success }
 ];
 

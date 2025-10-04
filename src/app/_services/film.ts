@@ -14,7 +14,7 @@ interface FilmResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class FilmService {
+export class Film {
   private apiUrl = 'http://127.0.0.1:8000/api/bookings';
 
   constructor(private http: HttpClient) {}

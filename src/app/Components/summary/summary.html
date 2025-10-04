@@ -1,0 +1,21 @@
+<div class="summary-page">
+  <h2>Booking Summary</h2>
+
+  <p><strong>Film:</strong> {{ film }}</p>
+  <p><strong>Seats:</strong> {{ seats.join(', ') }}</p>
+  <p><strong>Seats Total:</strong> {{ seats.length * seatPrice }} EGP</p>
+
+  <h3>Extras:</h3>
+  <ul>
+    @for (extra of extras; track extra.name) {
+      <li>
+        {{ extra.name }} - {{ extra.price }} EGP
+      </li>
+    }
+  </ul>
+
+  <hr>
+  <p class="total"><strong>Total:</strong> {{ total }} EGP</p>
+
+  <button (click)="confirmBooking()" class="btn-confirm">Confirm Booking</button>
+</div>

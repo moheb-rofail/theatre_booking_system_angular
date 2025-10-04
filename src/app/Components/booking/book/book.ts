@@ -1,43 +1,49 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Film } from '../../../_services/film';
+import { IFilm } from '../../../_interfaces/ifilm';
 
 @Component({
   selector: 'app-book',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './book.html',
-  styleUrl: './book.css'
+  styleUrls: ['./book.css']
 })
-export class Book {
+export class Book implements OnInit {
+  filmId!: number;
+  film?: IFilm;
+  seats: number[] = [];
+  selectedSeats: number[] = [];
+  seatPrice: number = 100; // price of the seat
 
-  bookForm = new FormGroup({
-    //party_date: new FormControl('', Validators.required),
-    //party_time : new FormControl('', Validators.required),
-    seat_number: new FormControl('', Validators.required),
-    //extras: new FormControl('')
-  });
+  constructor(private route: ActivatedRoute, private router: Router, private Film: Film) {}
 
-  rows = 10; 
-  cols = 5; 
-  seats: { id: number, status: string }[] = [];
+  ngOnInit() {
+    this.filmId = Number(this.route.snapshot.paramMap.get('id'));  // get film ID from Link
 
-  constructor(private fb: FormBuilder) {
-    this.bookForm = this.fb.group({
-      seat_number: ['']
+    this.Film.getFilmById(this.filmId).subscribe((data) => {       // get film by ID from Api service film.ts 
+      this.film = data;
     });
-
-    for (let i = 1; i <= this.rows * this.cols; i++) {
-      this.seats.push({ id: i, status: 'available' });
-    }
+    this.seats = Array.from({ length: 50 }, (_, i) => i + 1);      // Created Array of 50 seats
   }
 
-  selectSeat(seat: any) {
-    if (seat.status === 'booked') return;
-
-    this.bookForm.patchValue({ seat_number: seat.id });
-    console.log('Selected seat:', seat);
+  toggleSeat(seat: number) {
+    let index = this.selectedSeats.indexOf(seat);
+    if (index > -1) this.selectedSeats.splice(index, 1); // when user click on selected seat, it will be unselected
+    else this.selectedSeats.push(seat);
   }
 
-  order() {
-    console.log('Form submitted:', this.bookForm.value);
+  confirmBooking() {
+    
+    // if (this.selectedSeats.length === 0) return alert('Please select at least one seat!');
+    
+    this.router.navigate(['/extras'], {
+      queryParams: {
+        film: this.film?.title,
+        seats: this.selectedSeats.join(','),
+        seatPrice: this.seatPrice
+      }
+    });
   }
 }

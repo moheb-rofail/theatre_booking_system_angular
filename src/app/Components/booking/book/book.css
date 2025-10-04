@@ -1,4 +1,34 @@
-input[type=radio]{
-    display: inline !important;
-    float: left;
+.scroll-container {
+  overflow-anchor: none;
+}
+
+.booking-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.seats-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  margin: 20px auto;
+  width: 400px;
+}
+
+.seat {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.seat:hover {
+  background-color: #b0bec5;
+}
+
+.seat.selected {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
 }
