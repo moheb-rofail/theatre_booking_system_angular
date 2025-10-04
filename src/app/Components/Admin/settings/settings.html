@@ -1,0 +1,7 @@
+<form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+    <input type="number" class="form-control" formControlName="ticket_price" placeholder="Ticket Price" />
+    <input type="number" class="form-control" formControlName="popcorn_price" placeholder="Popcorn Price" />
+    <input type="number" class="form-control" formControlName="cola_price" placeholder="Cola Price" />
+    <input type="number" class="form-control" formControlName="total_seats" placeholder="Total Seats" />
+    <button type="submit">Save</button>
+</form>
