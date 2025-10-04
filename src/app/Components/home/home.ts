@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilmService } from '../../_services/film';
+import { Film } from '../../_services/film';
 import { IFilm } from '../../_interfaces/ifilm';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
@@ -13,21 +13,23 @@ import { IFilm } from '../../_interfaces/ifilm';
 export class Home implements OnInit {
   films: IFilm[] = [];
 
-  constructor(private filmService: FilmService) {}
+  constructor(private Film: Film, private router: Router) {}
 
-  ngOnInit() {
-    this.filmService.getFilms().subscribe((films) => {
-      this.films = films;
+    // return all films
+  ngOnInit() { 
+    this.Film.getFilms().subscribe((films) => {   
+      this.films = films;  
       console.log(' Films loaded: ', this.films);
     });
   }
-
+    // use film.id in for loop in track index home.html
   trackById(index: number, film: IFilm) {
-    return film.id;
+    return film.id; 
   }
 
-  selectFilm(film: IFilm) {
-    console.log('🎬 Selected film:', film.title); 
     // the output in console when user selected film
+  selectFilm(film: IFilm) {
+    this.router.navigate(['/book', film.id]);
+    // console.log('Selected film:', film.title); 
   }
 }

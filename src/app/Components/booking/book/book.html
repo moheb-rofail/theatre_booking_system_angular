@@ -1,15 +1,24 @@
-<form [formGroup]="bookForm" (ngSubmit)="order()">
-    <div class="form-group">
-        <label>Seat Number</label>
-        @for (row of [].constructor(rows); let r = $index; track $index) {
-        <div class="row">
-            @for (seat of seats.slice(r * cols, (r + 1) * cols); track seat.id) {
-            <button type="button" class="seat {{ seat.status }}" (click)="selectSeat(seat)">
-                {{ seat.id }}
-            </button>
-            }
+@if (film) {
+  <div class="booking-page">
+    <h2>Booking for: {{ film.title }}</h2>
+    <p><strong>Type:</strong> {{ film.TypeOfFilm }}</p>
+    <hr>
+
+    <div class="seats-grid">
+      @for (seat of seats; track seat) {
+        <div class="seat"
+          [class.selected]="selectedSeats.includes(seat)" 
+          (click)="toggleSeat(seat)"
+        >
+          {{ seat }}
         </div>
-        }
+      }
     </div>
-    <button type="submit" class="btn btn-primary">Confirm Order</button>
-</form>
+
+    <button (click)="confirmBooking()" [disabled]="selectedSeats.length === 0">
+      Confirm Booking
+    </button>
+  </div>
+} @else {
+  <p>Loading film details...</p>
+}

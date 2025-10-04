@@ -1,0 +1,29 @@
+<div class="extras-container">
+  <h2>Choose Extras</h2>
+
+  <p><strong>Film:</strong> {{ filmTitle }}</p>
+  <p><strong>Seats:</strong> {{ selectedSeats.join(', ') }}</p>
+  <p><strong>Seat Price:</strong> {{ seatPrice }} EGP</p>
+  <p><strong>Total Seats Cost:</strong> {{ totalSeatsCost }} EGP</p>
+
+  <hr>
+
+  <h3>Extras</h3>
+  <ul>
+    @for (extra of extras; track extra.name) {
+      <li>
+        <label>
+          <input type="checkbox" [(ngModel)]="extra.selected">
+          {{ extra.name }} - {{ extra.price }} EGP
+        </label>
+      </li>
+    }
+  </ul>
+
+  <hr>
+
+  <h3>Summary</h3>
+  <p><strong>Total:</strong> {{ getTotalCost() }} EGP</p>
+
+  <button (click)="confirmBooking()">Confirm Booking</button>
+</div>
