@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Setting } from '../../../_services/setting';
+import { ISetting } from '../../../_interfaces/isetting';
+
 
 @Component({
   selector: 'app-settings',
@@ -13,9 +16,12 @@ export class Settings implements OnInit {
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
+  private settingService= inject(Setting);
+  settings:ISetting[] = [];
+
   ngOnInit() {
     this.settingsForm = this.fb.group({
-      ticket_price: [''],
+      ticket_price: [],
       popcorn_price: [''],
       cola_price: [''],
       total_seats: ['']
@@ -31,8 +37,8 @@ export class Settings implements OnInit {
   }
 
   saveSettings() {
-    const formData = this.settingsForm.value;
-    this.http.patch('http://localhost:8000/api/settings', formData)
+    var formData = this.settingsForm.value;
+    this.http.post('http://localhost:8000/api/settings', formData)
       .subscribe(res => {
         console.log('Settings updated!', res);
       });

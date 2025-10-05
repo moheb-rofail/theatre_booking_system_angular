@@ -1,3 +1,4 @@
+@if(hasData()){
 <table class="table">
     <thead>
         <tr>
@@ -10,7 +11,7 @@
             <th></th>
         </tr>
     </thead>
-    @for(booking of bookings(); track booking.id){
+    @for(booking of Bookings; track booking.id){
         <tr>
             <td>{{booking.party_date}}</td>
             <td>{{booking.party_number}}</td>
@@ -22,3 +23,4 @@
         </tr>
     }
 </table>
+}

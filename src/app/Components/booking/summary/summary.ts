@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Booking } from '../../_services/booking';
-import { IBooking } from '../../_interfaces/ibooking';
+import { Booking } from '../../../_services/booking';
+import { IBooking } from '../../../_interfaces/ibooking';
 import { forkJoin } from 'rxjs';
 
 @Component({

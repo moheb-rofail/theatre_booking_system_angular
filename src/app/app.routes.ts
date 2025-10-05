@@ -4,18 +4,18 @@ import { Home } from './Components/home/home';
 import { ShowBooking } from './Components/booking/show-booking/show-booking';
 import { Book } from './Components/booking/book/book';
 import { Settings } from './Components/Admin/settings/settings';
-import { Extras } from './Components/extras/extras';
-import { Summary } from './Components/summary/summary';
-import { Success } from './Components/success/success';
+import { Extras } from './Components/booking/extras/extras';
+import { Summary } from './Components/booking/summary/summary';
+import { Success } from '../../success/success';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'admin/allBookings', component: AllBookings },
-  {path:'admin/settings', component:Settings},
+  { path: 'admin/settings', component:Settings},
   { path: 'booking/:id', component: ShowBooking },
   { path: 'book/:id', component: Book },
   { path: 'extras', component: Extras },
   { path: 'summary', component: Summary },
-  { path: 'success', component: Success }
+  { path: 'success', component: Success },
 ];
 

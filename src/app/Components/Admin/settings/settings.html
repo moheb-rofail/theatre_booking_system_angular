@@ -1,7 +1,25 @@
+<div class="container">
+    <h2>Settings</h2>
 <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
-    <input type="number" class="form-control" formControlName="ticket_price" placeholder="Ticket Price" />
-    <input type="number" class="form-control" formControlName="popcorn_price" placeholder="Popcorn Price" />
-    <input type="number" class="form-control" formControlName="cola_price" placeholder="Cola Price" />
-    <input type="number" class="form-control" formControlName="total_seats" placeholder="Total Seats" />
+    <div class="form-group">
+        <label for="ticket_price">Ticket Price</label>
+        <input type="number" class="form-control" formControlName="ticket_price" placeholder="Ticket Price" />
+    </div>
+
+    <div class="form-group">
+        <label for="popcorn_price">PopCorn Price</label>
+        <input type="number" class="form-control" formControlName="popcorn_price" placeholder="Popcorn Price" />
+    </div>
+
+    <div class="form-group">
+        <label for="cola_price">Cola Price</label>
+        <input type="number" class="form-control" formControlName="cola_price" placeholder="Cola Price" />
+    </div>
+
+    <div class="form-group">
+        <label for="total_seats">Total Seats</label>
+        <input type="number" class="form-control" formControlName="total_seats" placeholder="Total Seats" />
+    </div>
     <button type="submit">Save</button>
 </form>
+</div>

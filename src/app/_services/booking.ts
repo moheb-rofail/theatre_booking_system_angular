@@ -9,15 +9,16 @@ import { IBooking } from '../_interfaces/ibooking';
 })
 
 export class Booking {
+
   http = inject(HttpClient);
-  private BookingsSignal = signal<IBooking[]>([]);
+  private BookingsSignal = signal<any>([]);
+  private userBookingsSignal = signal<any>([]);
+
 
   constructor() {
     this.http
       .get<IPaginatedBookings>('http://127.0.0.1:8000/api/bookings/')
-      .pipe(
-        map((response) => response.data)
-      ).subscribe((data) => {
+      .subscribe((data) => {
         this.BookingsSignal.set(data);
       });
   }

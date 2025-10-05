@@ -26,6 +26,4 @@ export class Film {
   getFilmById(id: number): Observable<IFilm> {
     return this.http.get<IFilm>(`${this.apiUrl}/${id}`);   //get one film by id (i don't use it now)
   }
-
-  //film = this.getFilmById()
 }
