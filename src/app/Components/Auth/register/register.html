@@ -1,0 +1,67 @@
+<form [formGroup]="regForm" (ngSubmit)="register()">
+    <div class="form-group">
+        <label for="firstName">firstName</label>
+        <input type="text" id="firstName" formControlName="firstName" class="form-control"/>
+        @if(firstName?.invalid && (firstName?.touched || firstName?.dirty)){
+            @for (error of firstName.errors | keyvalue; track error.key) {
+                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            }
+        }
+    </div>
+    <div class="form-group">
+        <label for="lastName">lastName</label>
+        <input type="text" id="lastName" formControlName="lastName" class="form-control"/>
+        @if(lastName?.invalid && (lastName?.touched || lastName?.dirty)){
+            @for (error of lastName.errors | keyvalue; track error.key) {
+                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            }
+        }
+    </div>
+    <div class="form-group">
+        <label for="imageURL">imageURL</label>
+        <input type="url" id="imageURL" formControlName="imageURL" class="form-control"/>
+        @if(imageURL?.invalid && (imageURL?.touched || imageURL?.dirty)){
+            @for (error of imageURL.errors | keyvalue; track error.key) {
+                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            }
+        }
+    </div>
+    <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" id="email" formControlName="email" class="form-control"/>
+        @if(email?.invalid && (email?.touched || email?.dirty)){
+            @for (error of email.errors | keyvalue; track error.key) {
+                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            }
+        }
+    </div>
+    <div class="form-group">
+        <label for="username">username</label>
+        <input type="text" id="username" formControlName="username" class="form-control"/>
+        @if(username?.invalid && (username?.touched || username?.dirty)){
+            @for (error of username.errors | keyvalue; track error.key) {
+                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            }
+        }
+    </div>
+    <div class="form-group">
+        <label for="password">password</label>
+        <input type="password" id="password" formControlName="password" class="form-control" />
+        @if(password?.invalid && (password?.touched || password?.dirty)){
+            @for (error of password.errors | keyvalue; track error.key) {
+                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            }
+        }
+    </div>
+    <div formGroupName="address">
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" formControlName="city" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input type="text" id="street" formControlName="street" class="form-control" />
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success" value="Submit" [disabled]="regForm.invalid" />
+</form>
