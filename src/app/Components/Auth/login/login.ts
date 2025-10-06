@@ -13,17 +13,12 @@ export class Login {
   router = inject(Router);
   authService = inject(AuthService);
   user = {
-    username: '',
+    email: '',
     password: ''
   }
 
   login(user:any){
-    // console.log(user.username);
-    // console.log(user.password);
-    // console.log(this.authService.login({username: user.username, password: user.password}));
-    if(this.authService.login({username: user.username, password: user.password})) {
-      localStorage.setItem('auth', 'true');
-      //this.router.navigate(['']);
-    }
+    this.authService.login({email: user.email, password:user.password}).subscribe(res => {
+      });
   }
 }

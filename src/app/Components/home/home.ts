@@ -19,7 +19,6 @@ export class Home implements OnInit {
   ngOnInit() { 
     this.Film.getFilms().subscribe((films) => {   
       this.films = films;  
-      console.log(' Films loaded: ', this.films);
     });
   }
     // use film.id in for loop in track index home.html

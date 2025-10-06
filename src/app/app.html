@@ -1,3 +1,5 @@
-<app-admin-nav></app-admin-nav>
+@if(isAdmin()){
+    <app-admin-nav></app-admin-nav>
+}
 <app-user-nav/>
 <router-outlet></router-outlet>

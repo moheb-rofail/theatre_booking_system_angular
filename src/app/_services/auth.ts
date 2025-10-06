@@ -1,97 +1,86 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-
-export interface User {
-  id: number;
-  username: string;
-  email: string;
-}
-
-export interface LoginResponse {
-  user: User;
-  token?: string;
-}
+import { IUser } from '../_interfaces/iuser';
+import { LoginResponse } from '../_interfaces/iuser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api';
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
+  currentUser = signal<LoginResponse['user'] | null>(null);
+  loggedIn = signal<boolean>(!!localStorage.getItem('token'));
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.loadCurrentUser();
+  constructor(private http: HttpClient, private router: Router) {}
+  login(credentials: { email: string; password: string }) {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
+      tap((res) => {
+        this.currentUser.set(res.user);
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        this.loggedIn.set(true);
+        this.router.navigate(['']);
+      }),
+      catchError((error) => {
+        console.error('Login failed:', error);
+        alert('بيانات الدخول غير صحيحة');
+        return throwError(() => error);
+      })
+    );
   }
 
-  // تسجيل الدخول
-  login(credentials: { username: string; password: string }) {
-    //console.log(credentials);
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
-    .subscribe((data) => {
-        console.log(data);
-      });
-      // .pipe(
-      //   tap(response => {
-      //     console.log(response);
-      //     if (response.token) {
-      //       localStorage.setItem('token', response.token);
-      //     }
-      //     this.currentUserSubject.next(response.user);
-      //     console.log(response);
-      //   })
-      // );
-      
+  isLoggedIn() {
+    return this.loggedIn();
+  }
+
+  isAdmin(): boolean {
+    const user = this.currentUser() ?? JSON.parse(localStorage.getItem('user') || 'null');
+    return !!user?.is_admin;
   }
 
   // التسجيل
-  register(userData: { name: string; email: string; password: string; password_confirmation: string }): Observable<LoginResponse> {
+  register(userData: { name: string; email: string; password: string;}): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/register`, userData)
       .pipe(
         tap(response => {
           if (response.token) {
+            this.currentUser.set(response.user);
             localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            this.loggedIn.set(true);
+            this.router.navigate(['']);
           }
-          this.currentUserSubject.next(response.user);
+          //this.currentUser.next(response.user);
         })
       );
   }
 
   // تسجيل الخروج
   logout(): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/logout`, {})
+    return this.http.post<void>(
+    `${this.apiUrl}/logout`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }
+  )
       .pipe(
         tap(() => {
           localStorage.removeItem('token');
-          this.currentUserSubject.next(null);
+          localStorage.removeItem('user');
+          this.currentUser.set(null);
+          this.loggedIn.set(false);
           this.router.navigate(['/login']);
         })
       );
   }
 
   // جلب بيانات المستخدم الحالي
-  getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/user`);
-  }
-
-  // تحميل بيانات المستخدم عند بدء التطبيق
-  private loadCurrentUser(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.getCurrentUser().subscribe({
-        next: (user) => this.currentUserSubject.next(user),
-        error: () => {
-          localStorage.removeItem('token');
-          this.currentUserSubject.next(null);
-        }
-      });
-    }
-  }
-
-  // التحقق إذا كان المستخدم مسجل الدخول
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+  getCurrentUser(): Observable<IUser> {
+    return this.http.get<IUser>(`${this.apiUrl}/user`);
   }
 }

@@ -19,11 +19,17 @@ export class Film {
 
   constructor(private http: HttpClient) {}
 
-  getFilms(): Observable<IFilm[]> {
-    return this.http.get<IFilm[]>(this.apiUrl);
+  getFilms(): Observable<any> {
+    return this.http.get(this.apiUrl);
   }
 
   getFilmById(id: number): Observable<IFilm> {
-    return this.http.get<IFilm>(`${this.apiUrl}/${id}`);   //get one film by id (i don't use it now)
+    return this.http.get<IFilm>(`${this.apiUrl}/${id}`);
+  }
+
+  addMovie(data: any){
+    return this.http.post(this.apiUrl, data).subscribe((data) => {
+      console.log(data);
+    });
   }
 }

@@ -9,6 +9,8 @@ import { Summary } from './Components/booking/summary/summary';
 import { Success } from '../../success/success';
 import { Register } from './Components/Auth/register/register';
 import { Login } from './Components/Auth/login/login';
+import { Logout } from './Components/Auth/logout/logout';
+import { AddMovie } from './Components/Movies/add-movie/add-movie';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -20,6 +22,8 @@ export const routes: Routes = [
   { path: 'summary', component: Summary },
   { path: 'success', component: Success },
   { path: 'register', component:Register},
-  { path: 'login', component:Login}
+  { path: 'login', component:Login},
+  { path: 'logout', component:Logout},
+  { path: 'admin/addMovie', component:AddMovie}
 ];
 
