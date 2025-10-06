@@ -7,6 +7,8 @@ import { Settings } from './Components/Admin/settings/settings';
 import { Extras } from './Components/booking/extras/extras';
 import { Summary } from './Components/booking/summary/summary';
 import { Success } from '../../success/success';
+import { Register } from './Components/Auth/register/register';
+import { Login } from './Components/Auth/login/login';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -17,5 +19,7 @@ export const routes: Routes = [
   { path: 'extras', component: Extras },
   { path: 'summary', component: Summary },
   { path: 'success', component: Success },
+  { path: 'register', component:Register},
+  { path: 'login', component:Login}
 ];
 

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../../_services/user';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../_services/auth';
 
 @Component({
   selector: 'app-login',
@@ -11,19 +11,19 @@ import { Router } from '@angular/router';
 })
 export class Login {
   router = inject(Router);
-  userService = inject(User);
+  authService = inject(AuthService);
   user = {
     username: '',
     password: ''
   }
 
   login(user:any){
-    console.log(user.username);
-    console.log(user.password);
-    console.log(this.userService.auth(user.username, user.password));
-    if(this.userService.auth(user.username, user.password)) {
+    // console.log(user.username);
+    // console.log(user.password);
+    // console.log(this.authService.login({username: user.username, password: user.password}));
+    if(this.authService.login({username: user.username, password: user.password})) {
       localStorage.setItem('auth', 'true');
-      this.router.navigate(['']);
+      //this.router.navigate(['']);
     }
   }
 }

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 export interface User {
   id: number;
-  name: string;
+  username: string;
   email: string;
 }
 
@@ -27,16 +27,23 @@ export class AuthService {
   }
 
   // تسجيل الدخول
-  login(credentials: { email: string; password: string }): Observable<LoginResponse> {
+  login(credentials: { username: string; password: string }) {
+    //console.log(credentials);
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
-      .pipe(
-        tap(response => {
-          if (response.token) {
-            localStorage.setItem('token', response.token);
-          }
-          this.currentUserSubject.next(response.user);
-        })
-      );
+    .subscribe((data) => {
+        console.log(data);
+      });
+      // .pipe(
+      //   tap(response => {
+      //     console.log(response);
+      //     if (response.token) {
+      //       localStorage.setItem('token', response.token);
+      //     }
+      //     this.currentUserSubject.next(response.user);
+      //     console.log(response);
+      //   })
+      // );
+      
   }
 
   // التسجيل
