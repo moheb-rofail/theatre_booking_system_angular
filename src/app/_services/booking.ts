@@ -35,4 +35,8 @@ export class Booking {
     console.log(data);
     return this.http.post(`http://127.0.0.1:8000/api/bookings/`, data);
   }
+
+  getBookedSeats(party_date:string, movie_id:number) {
+    return this.http.get(`http://127.0.0.1:8000/api/booked_seats/${party_date}/${movie_id}`);
+  }
 }

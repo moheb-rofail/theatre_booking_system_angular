@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Film } from '../../../_services/film';
 import { IFilm } from '../../../_interfaces/ifilm';
+import { Booking } from '../../../_services/booking';
 
 @Component({
   selector: 'app-book',
@@ -17,6 +18,9 @@ export class Book implements OnInit {
   selectedSeats: number[] = [];
   seatPrice: number = 100; // price of the seat
 
+  bookingService = inject(Booking);
+  bookedSeats:{}={};
+
   constructor(private route: ActivatedRoute, private router: Router, private Film: Film) {}
 
   ngOnInit() {
@@ -26,6 +30,14 @@ export class Book implements OnInit {
       this.film = data;
     });
     this.seats = Array.from({ length: 50 }, (_, i) => i + 1);      // Created Array of 50 seats
+  
+    this.bookingService.getBookedSeats('2024-12-02', 1).subscribe({
+      next: (data) => {
+        this.bookedSeats = data;
+        console.log('Booked seats:', this.bookedSeats);
+      },
+      error: (err) => console.error('Error fetching seats:', err)
+    });
   }
 
   toggleSeat(seat: number) {
@@ -45,5 +57,23 @@ export class Book implements OnInit {
         seatPrice: this.seatPrice
       }
     });
+  }
+
+  isSeatBooked(seatNumber: number): boolean {
+    if (!this.bookedSeats) {
+      return false;
+    }
+
+    // If bookedSeats is an array of seat numbers
+    if (Array.isArray(this.bookedSeats)) {
+      return this.bookedSeats.includes(seatNumber);
+    }
+    
+    // If bookedSeats is an object with seat numbers as keys
+    if (typeof this.bookedSeats === 'object' && this.bookedSeats !== null) {
+      return this.bookedSeats.hasOwnProperty(seatNumber.toString());
+    }
+    
+    return false;
   }
 }

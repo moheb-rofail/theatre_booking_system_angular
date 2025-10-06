@@ -12,12 +12,11 @@ export class Setting {
 
   constructor() {
     this.http
-      .get<ISetting>('http://127.0.0.1:8000/api/settings/')
-      .subscribe((data) => this.SettingsSignal.set(data));
+      .get<ISetting>('http://127.0.0.1:8000/api/settings/');
   }
 
-  getAllSettings() {
-    return this.SettingsSignal;
+  getAllSettings(): Observable<any>  {
+    return this.http.get('http://127.0.0.1:8000/api/settings/');
   }
 
   updateSettings(data: any): Observable<any> {

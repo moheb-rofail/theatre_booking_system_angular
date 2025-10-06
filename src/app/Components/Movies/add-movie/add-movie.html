@@ -3,7 +3,7 @@
     <div class="form-group">
         <label for="title">title</label>
         <input type="text" id="title" formControlName="title" class="form-control"/>
-        @if(title?.invalid && (title?.touched || title?.dirty)){
+        @if(title.invalid && (title.touched || title.dirty)){
             @for (error of title.errors | keyvalue; track error.key) {
                 <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
             }
@@ -12,7 +12,7 @@
     <div class="form-group">
         <label for="description">description</label>
         <input type="text" id="description" formControlName="description" class="form-control"/>
-        @if(description?.invalid && (description?.touched || description?.dirty)){
+        @if(description.invalid && (description.touched || description.dirty)){
             @for (error of description.errors | keyvalue; track error.key) {
                 <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
             }
@@ -21,7 +21,7 @@
     <div class="form-group">
         <label for="duration">duration</label>
         <input type="number" id="duration" formControlName="duration" class="form-control" />
-        @if(duration?.invalid && (duration?.touched || duration?.dirty)){
+        @if(duration.invalid && (duration.touched || duration.dirty)){
             @for (error of duration.errors | keyvalue; track error.key) {
                 <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
             }
@@ -31,7 +31,7 @@
     <div class="form-group">
         <label for="TypeOfFilm">Movie Type</label>
         <input type="text" id="TypeOfFilm" formControlName="TypeOfFilm" class="form-control" />
-        @if(TypeOfFilm?.invalid && (TypeOfFilm?.touched || TypeOfFilm?.dirty)){
+        @if(TypeOfFilm.invalid && (TypeOfFilm.touched || TypeOfFilm.dirty)){
             @for (error of TypeOfFilm.errors | keyvalue; track error.key) {
                 <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
             }

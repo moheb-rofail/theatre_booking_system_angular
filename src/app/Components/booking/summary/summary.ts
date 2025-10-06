@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Booking } from '../../../_services/booking';
 import { IBooking } from '../../../_interfaces/ibooking';
 import { forkJoin } from 'rxjs';
+import { Setting } from '../../../_services/setting';
+import { ISetting } from '../../../_interfaces/isetting';
 
 @Component({
   selector: 'app-summary',
@@ -18,12 +20,14 @@ export class Summary implements OnInit {
   extras: any[] = [];
   total = 0;
 
-  booking!:IBooking;
+  settingService = inject(Setting);
+  settings:ISetting[] = [];
 
+  booking!:IBooking;
   private BookingService = inject(Booking);
   constructor(private route: ActivatedRoute, private router: Router) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.queryParams.subscribe(params => {
       console.log('Query Params:', params);
 
@@ -38,6 +42,11 @@ export class Summary implements OnInit {
       console.log('Extras:', this.extras);
       console.log('Total:', this.total);
     });
+
+    this.settingService.getAllSettings().subscribe((settings) => {   
+      this.settings = settings;  
+    });
+    console.log(this.settings);
   }
 
   bookings: IBooking[] = [];
