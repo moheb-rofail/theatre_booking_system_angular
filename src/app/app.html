@@ -1,8 +1,8 @@
 @if(isAdmin()){
     <app-admin-nav></app-admin-nav>
 }
-<app-user-nav/>
-<div  class="container">
-<router-outlet></router-outlet>
-</div>
+<app-user-nav></app-user-nav>
 
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

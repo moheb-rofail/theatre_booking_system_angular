@@ -13,6 +13,7 @@ import { Logout } from './Components/Auth/logout/logout';
 import { AddMovie } from './Components/Movies/add-movie/add-movie';
 import { RoleGuard } from './_guards/role-guard';
 import { Unauthorized } from './Components/unauthorized/unauthorized';
+import { BookingSuccessComponent } from './Components/booking-success/booking-success';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -31,5 +32,6 @@ export const routes: Routes = [
   { path: 'admin/allBookings', component: AllBookings, canActivate: [RoleGuard], data: { roles: ['admin'] }},
   { path: 'admin/settings', component:Settings, canActivate: [RoleGuard], data: { roles: ['admin'] }},
   { path: 'admin/addMovie', component:AddMovie, canActivate: [RoleGuard], data: { roles: ['admin'] }},
+  { path: 'booking-success', component: BookingSuccessComponent }
 ];
 

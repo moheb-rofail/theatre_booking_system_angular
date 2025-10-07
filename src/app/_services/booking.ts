@@ -7,13 +7,11 @@ import { IBooking } from '../_interfaces/ibooking';
 @Injectable({
   providedIn: 'root',
 })
-
 export class Booking {
 
   http = inject(HttpClient);
   private BookingsSignal = signal<any>([]);
   private userBookingsSignal = signal<any>([]);
-
 
   constructor() {
     this.http
@@ -32,8 +30,13 @@ export class Booking {
   }
 
   addBooking(data: any): Observable<any> {
-    console.log(data);
+    console.log('Sending booking: ', data);
     return this.http.post(`http://127.0.0.1:8000/api/bookings/`, data);
+  }
+
+  deleteBooking(id: number): Observable<any> {
+    console.log('Deleting booking with ID:', id);
+    return this.http.delete(`http://127.0.0.1:8000/api/bookings/${id}`);
   }
 
   getBookedSeats(party_date:string, movie_id:number) {

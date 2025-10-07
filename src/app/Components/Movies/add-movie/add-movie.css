@@ -1,0 +1,71 @@
+form {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px 30px;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+form input.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 12px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input.form-control:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 5px rgba(108, 99, 255, 0.3);
+  outline: none;
+}
+
+form .alert-danger {
+  background-color: #f8d7da;
+  color: #842029;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  margin-top: -8px;
+  margin-bottom: 10px;
+}
+
+form input.btn-success {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background-color: #6c63ff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+form input.btn-success:hover {
+  background-color: #5952d4;
+  transform: translateY(-2px);
+}
+
+form input.btn-success:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 576px) {
+  form {
+    padding: 20px;
+  }
+}

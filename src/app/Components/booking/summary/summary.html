@@ -7,10 +7,12 @@
 
   <h3>Extras:</h3>
   <ul>
-    @for (extra of extras; track extra.name) {
-      <li>
-        {{ extra.name }} - {{ extra.price }} EGP
-      </li>
+    @if (extras && extras.length > 0) {
+      @for (extra of extras; track extra.name) {
+        <li>{{ extra.name }} - {{ extra.price }} EGP</li>
+      }
+    } @else {
+      <li>No extras selected.</li>
     }
   </ul>
 
@@ -20,6 +22,5 @@
   <button (click)="confirmBooking()" class="btn-confirm">Confirm Booking</button>
 </div>
 
-@for(setting of settings; track setting){
-  setting1 : {{setting}}
-}
+<hr>
+

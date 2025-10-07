@@ -1,15 +1,22 @@
-<div class="film-list">
-  @for (film of films; track film.id) {
-    <div class="film-card">
-      <img [src]="film.poster" alt="{{ film.title }}" class="film-poster"/>
-      <div class="film-details">
-        <h3>{{ film.title }}</h3>
-        <p><strong>Description:</strong> {{ film.description }}</p>
-        <p><strong>Type:</strong> {{ film.TypeOfFilm }}</p>
-        <p><strong>Duration:</strong> {{ film.duration }} mins</p>
-        <p><small>Created: {{ film.created_at | date:'medium' }}</small></p>
-        <button (click)="selectFilm(film)">Select Film</button>
+<main class="main-content">
+  <div class="film-list">
+    @for (film of films; track film.id) {
+      <div class="film-card">
+        <div class="poster-container">
+          <img [src]="'http://127.0.0.1:8000/storage/' + film.poster" 
+               alt="{{ film.title }}" class="film-poster"/>
+          <div class="overlay">
+            <button (click)="selectFilm(film)">Select Film</button>
+          </div>
+        </div>
+        <div class="film-details">
+          <h3>{{ film.title }}</h3>
+          <p><strong>Description:</strong> <span>{{ film.description }}</span></p>
+          <p><strong>Type:</strong> <span>{{ film.TypeOfFilm }}</span></p>
+          <p><strong>Duration:</strong> <span>{{ film.duration }} mins</span></p>
+          <p><small>Created: {{ film.created_at | date:'medium' }}</small></p>
+        </div>
       </div>
-    </div>
-  }
-</div>
+    }
+  </div>
+</main>

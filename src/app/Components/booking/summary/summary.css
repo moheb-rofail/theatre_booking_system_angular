@@ -1,32 +1,58 @@
 .summary-page {
-  max-width: 500px;
-  margin: 40px auto;
-  background: #fff;
+  background-color: #121212; 
+  color: #e0e0e0;
+  padding: 30px;
+  margin: 20px auto;
   border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  font-family: 'Poppins', sans-serif;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .summary-page h2 {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 28px;
+  color: #ffd700;
+}
+
+.summary-page p, 
+.summary-page ul {
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 .summary-page ul {
-  list-style: none;
-  padding: 0;
+  list-style-type: disc;
+  padding-left: 20px;
 }
 
-.summary-page li {
-  margin: 6px 0;
-  background: #f8f8f8;
-  border-radius: 8px;
-  padding: 6px 10px;
+.summary-page hr {
+  margin: 20px 0;
+  border: 0.5px solid #555;
 }
 
-.total {
+.summary-page .total {
+  font-size: 20px;
+  font-weight: bold;
   text-align: right;
+  margin-top: 10px;
+}
+
+.summary-page .btn-confirm {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #ff4500;
+  color: white;
   font-size: 18px;
-  color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.summary-page .btn-confirm:hover {
+  background-color: #e03e00;
 }
