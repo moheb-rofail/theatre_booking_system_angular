@@ -41,6 +41,12 @@ export class Book implements OnInit {
   }
 
   toggleSeat(seat: number) {
+
+    if (this.isSeatBooked(seat)) {       // prevent user from selecting already booked seat
+      alert('This seat is already booked!');
+      return;
+    }
+
     let index = this.selectedSeats.indexOf(seat);
     if (index > -1) this.selectedSeats.splice(index, 1); // when user click on selected seat, it will be unselected
     else this.selectedSeats.push(seat);

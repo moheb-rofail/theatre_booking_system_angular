@@ -6,8 +6,8 @@
 
     <div class="seats-grid">
         @for (seat of seats; track seat) {
-            
-        <div class="seat" [class.selected]="selectedSeats.includes(seat)" [class.booked]="isSeatBooked(seat)" (click)="toggleSeat(seat)">
+        <div 
+          class="seat" [class.selected]="selectedSeats.includes(seat)" [class.booked]="isSeatBooked(seat)" (click)="toggleSeat(seat)">
             {{ seat }}
         </div>
         }
@@ -20,5 +20,3 @@
 } @else {
 <p>Loading film details...</p>
 }
-
-

@@ -7,6 +7,7 @@ interface ExtraOption {
   name: string;
   price: number;
   selected: boolean;
+  icon?: string;
 }
 
 @Component({
@@ -33,9 +34,9 @@ export class Extras implements OnInit {
       this.totalSeatsCost = this.selectedSeats.length * this.seatPrice; // total price of selected seats
 
       this.extras = [
-        { name: 'Popcorn', price: 50, selected: false },
-        { name: 'Drink', price: 30, selected: false },
-        { name: 'Chocolate', price: 25, selected: false }
+        { name: 'Popcorn', price: 50, selected: false, icon: '🍿'  },
+        { name: 'Drink', price: 30, selected: false, icon: '🥤' },
+        { name: 'Chocolate', price: 25, selected: false, icon: '🍫' }
       ];
     });
   }

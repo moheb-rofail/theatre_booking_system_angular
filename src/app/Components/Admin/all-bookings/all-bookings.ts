@@ -17,7 +17,6 @@ export class AllBookings {
   hasData = signal(false);
 
   constructor() {
-    // مراقبة تغييرات الـ bookings
     effect(() => {
       const currentBookings = this.bookings();
       if (currentBookings && currentBookings.length > 0) {

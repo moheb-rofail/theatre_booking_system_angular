@@ -1,3 +1,18 @@
+.extras-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.extras-container li {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.extra-icon {
+  margin-right: 8px;
+  font-size: 1.3rem;
+}
+
 .extras-container {
   text-align: center;
   padding: 20px;
