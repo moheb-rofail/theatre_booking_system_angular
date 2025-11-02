@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Film } from '../../../_services/film';
 import { IFilm } from '../../../_interfaces/ifilm';
 import { Booking } from '../../../_services/booking';
+import { Setting } from '../../../_services/setting';
 
 @Component({
   selector: 'app-book',
@@ -17,26 +18,65 @@ export class Book implements OnInit {
   seats: number[] = [];
   selectedSeats: number[] = [];
   seatPrice: number = 100; // price of the seat
+  partyDate: string = '';
+  loadingSeats: boolean = false;
 
   bookingService = inject(Booking);
-  bookedSeats:{}={};
+  settingService = inject(Setting);
+  bookedSeats: number[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private Film: Film) {}
+  constructor(private route: ActivatedRoute, private router: Router, private Film: Film) { }
 
   ngOnInit() {
     this.filmId = Number(this.route.snapshot.paramMap.get('id'));  // get film ID from Link
 
-    this.Film.getFilmById(this.filmId).subscribe((data) => {       // get film by ID from Api service film.ts 
-      this.film = data;
-    });
-    this.seats = Array.from({ length: 50 }, (_, i) => i + 1);      // Created Array of 50 seats
-  
-    this.bookingService.getBookedSeats('2024-12-02', 1).subscribe({
+    // Set default date to today or get from query params if provided
+    const today = new Date();
+    this.partyDate = this.route.snapshot.queryParamMap.get('date') ||
+      today.toISOString().split('T')[0];
+
+    // Load ticket price from settings
+    this.loadTicketPrice();
+
+    // Get film details
+    this.Film.getFilmById(this.filmId).subscribe({
       next: (data) => {
-        this.bookedSeats = data;
-        console.log('Booked seats:', this.bookedSeats);
+        this.film = data;
+        this.loadBookedSeats(); // Load booked seats after getting film
       },
-      error: (err) => console.error('Error fetching seats:', err)
+      error: (err) => {
+        console.error('Error loading film:', err);
+      }
+    });
+
+    this.seats = Array.from({ length: 50 }, (_, i) => i + 1);      // Created Array of 50 seats
+  }
+
+  loadTicketPrice() {
+    this.settingService.getAllSettings().subscribe({
+      next: (response: any) => {
+        const values = response.values || {};
+        this.seatPrice = values.ticket_price || 100;
+      },
+      error: (err) => {
+        console.error('Error loading ticket price:', err);
+      }
+    });
+  }
+
+  loadBookedSeats() {
+    this.loadingSeats = true;
+    this.bookingService.getBookedSeats(this.partyDate, this.filmId).subscribe({
+      next: (data) => {
+        this.bookedSeats = Array.isArray(data) ? data : [];
+        console.log('Booked seats for movie', this.filmId, 'on', this.partyDate, ':', this.bookedSeats);
+        this.loadingSeats = false;
+      },
+      error: (err) => {
+        console.error('Error fetching seats:', err);
+        this.bookedSeats = [];
+        this.loadingSeats = false;
+      }
     });
   }
 
@@ -53,33 +93,24 @@ export class Book implements OnInit {
   }
 
   confirmBooking() {
-    
-    // if (this.selectedSeats.length === 0) return alert('Please select at least one seat!');
-    
+
+    if (this.selectedSeats.length === 0) {
+      alert('Please select at least one seat!');
+      return;
+    }
+
     this.router.navigate(['/extras'], {
       queryParams: {
         film: this.film?.title,
+        filmId: this.filmId,
         seats: this.selectedSeats.join(','),
-        seatPrice: this.seatPrice
+        seatPrice: this.seatPrice,
+        partyDate: this.partyDate
       }
     });
   }
 
   isSeatBooked(seatNumber: number): boolean {
-    if (!this.bookedSeats) {
-      return false;
-    }
-
-    // If bookedSeats is an array of seat numbers
-    if (Array.isArray(this.bookedSeats)) {
-      return this.bookedSeats.includes(seatNumber);
-    }
-    
-    // If bookedSeats is an object with seat numbers as keys
-    if (typeof this.bookedSeats === 'object' && this.bookedSeats !== null) {
-      return this.bookedSeats.hasOwnProperty(seatNumber.toString());
-    }
-    
-    return false;
+    return this.bookedSeats.includes(seatNumber);
   }
 }

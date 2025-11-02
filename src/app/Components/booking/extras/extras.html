@@ -9,15 +9,28 @@
   <hr>
 
   <h3>Extras</h3>
-  <ul>
+  <ul class="extras-list">
     @for (extra of extras; track extra.name) {
-      <li>
-        <label>
-          <input type="checkbox" [(ngModel)]="extra.selected">
-          {{ extra.name }} - {{ extra.price }} EGP
-          <span class="extra-icon">{{ extra.icon }}</span>
-        </label>
-      </li>
+    <li class="extra-item">
+      <div class="extra-info">
+        <span class="extra-icon">{{ extra.icon }}</span>
+        <div class="extra-details">
+          <div class="extra-name">{{ extra.name }}</div>
+          <div class="extra-price">{{ extra.price }} EGP each</div>
+        </div>
+      </div>
+      <div class="quantity-controls">
+        <button (click)="decreaseQuantity(extra)" [disabled]="extra.quantity === 0"
+          class="quantity-btn minus">−</button>
+        <span class="quantity-display">{{ extra.quantity }}</span>
+        <button (click)="increaseQuantity(extra)" class="quantity-btn plus">+</button>
+      </div>
+      @if (extra.quantity > 0) {
+      <div class="extra-total">
+        = {{ extra.quantity * extra.price }} EGP
+      </div>
+      }
+    </li>
     }
   </ul>
 

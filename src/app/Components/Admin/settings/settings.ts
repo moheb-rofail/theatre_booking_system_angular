@@ -14,33 +14,55 @@ import { ISetting } from '../../../_interfaces/isetting';
 export class Settings implements OnInit {
   settingsForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
 
-  private settingService= inject(Setting);
-  settings:ISetting[] = [];
+  private settingService = inject(Setting);
+  settings: ISetting[] = [];
+
+  successMessage: string = '';
+  errorMessage: string = '';
 
   ngOnInit() {
     this.settingsForm = this.fb.group({
-      ticket_price: [],
-      popcorn_price: [''],
-      cola_price: [''],
-      total_seats: ['']
+      ticket_price: [0],
+      popcorn_price: [0],
+      drink_price: [0],
+      chocolate_price: [0]
     });
 
     this.loadSettings();
   }
 
   loadSettings() {
-    this.http.get<any>('http://localhost:8000/api/settings').subscribe(data => {
-      this.settingsForm.patchValue(data);
+    this.settingService.getAllSettings().subscribe({
+      next: (response: any) => {
+        const values = response.values || {};
+        this.settingsForm.patchValue({
+          ticket_price: values.ticket_price || 100,
+          popcorn_price: values.popcorn_price || 50,
+          drink_price: values.drink_price || 30,
+          chocolate_price: values.chocolate_price || 25
+        });
+      },
+      error: (error) => {
+        console.error('Error loading settings:', error);
+      }
     });
   }
 
   saveSettings() {
-    var formData = this.settingsForm.value;
-    this.http.post('http://localhost:8000/api/settings', formData)
-      .subscribe(res => {
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.settingService.updateSettings(this.settingsForm.value).subscribe({
+      next: (res) => {
+        this.successMessage = '✅ Settings updated successfully!';
         console.log('Settings updated!', res);
-      });
+      },
+      error: (error) => {
+        this.errorMessage = 'Error updating settings. Please try again.';
+        console.error('Error updating settings:', error);
+      }
+    });
   }
 }

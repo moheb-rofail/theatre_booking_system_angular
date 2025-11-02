@@ -1,42 +1,88 @@
-<form [formGroup]="movieForm" (ngSubmit)="addAMovie(movieForm.value)">
-   
-    <div class="form-group">
-        <label for="title">title</label>
-        <input type="text" id="title" formControlName="title" class="form-control"/>
-        @if(title.invalid && (title.touched || title.dirty)){
+<div class="movie-form-container">
+    <h2>Add New Movie</h2>
+
+    @if (successMessage) {
+    <div class="alert alert-success">
+        {{ successMessage }}
+    </div>
+    }
+
+    @if (errorMessage) {
+    <div class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    }
+
+    <form [formGroup]="movieForm" (ngSubmit)="addAMovie()" class="movie-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" formControlName="title" class="form-control"
+                placeholder="Enter movie title" />
+            @if(title.invalid && (title.touched || title.dirty)){
             @for (error of title.errors | keyvalue; track error.key) {
-                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            <div class="error-message">{{ error.key }}: {{ error.value | json }}</div>
             }
-        }
-    </div>
-    <div class="form-group">
-        <label for="description">description</label>
-        <input type="text" id="description" formControlName="description" class="form-control"/>
-        @if(description.invalid && (description.touched || description.dirty)){
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description" class="form-control" rows="4"
+                placeholder="Enter movie description"></textarea>
+            @if(description.invalid && (description.touched || description.dirty)){
             @for (error of description.errors | keyvalue; track error.key) {
-                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            <div class="error-message">{{ error.key }}: {{ error.value | json }}</div>
             }
-        }
-    </div>
-    <div class="form-group">
-        <label for="duration">duration</label>
-        <input type="number" id="duration" formControlName="duration" class="form-control" />
-        @if(duration.invalid && (duration.touched || duration.dirty)){
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Duration (minutes)</label>
+            <input type="number" id="duration" formControlName="duration" class="form-control"
+                placeholder="Enter duration in minutes" />
+            @if(duration.invalid && (duration.touched || duration.dirty)){
             @for (error of duration.errors | keyvalue; track error.key) {
-                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            <div class="error-message">{{ error.key }}: {{ error.value | json }}</div>
             }
-        }
-    </div>
+            }
+        </div>
 
-    <div class="form-group">
-        <label for="TypeOfFilm">Movie Type</label>
-        <input type="text" id="TypeOfFilm" formControlName="TypeOfFilm" class="form-control" />
-        @if(TypeOfFilm.invalid && (TypeOfFilm.touched || TypeOfFilm.dirty)){
+        <div class="form-group">
+            <label for="TypeOfFilm">Movie Type</label>
+            <select id="TypeOfFilm" formControlName="TypeOfFilm" class="form-control">
+                <option value="">Select movie type</option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Horror">Horror</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Romance">Romance</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Other">Other</option>
+            </select>
+            @if(TypeOfFilm.invalid && (TypeOfFilm.touched || TypeOfFilm.dirty)){
             @for (error of TypeOfFilm.errors | keyvalue; track error.key) {
-                <div class="alert alert-danger">{{ error.key }}: {{ error.value | json }}</div>
+            <div class="error-message">{{ error.key }}: {{ error.value | json }}</div>
             }
-        }
-    </div>
+            }
+        </div>
 
-    <input type="submit" class="btn btn-success" value="Submit" [disabled]="movieForm.invalid" />
-</form>
+        <div class="form-group">
+            <label for="poster">Poster Image</label>
+            <input type="file" id="poster" accept="image/*" (change)="onFileSelected($event)" class="form-control" />
+            @if (previewUrl) {
+            <div class="preview-container">
+                <img [src]="previewUrl" alt="Preview" class="preview-image" />
+            </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="movieForm.invalid || isLoading">
+            @if (isLoading) {
+            Adding Movie...
+            } @else {
+            Add Movie
+            }
+        </button>
+    </form>
+</div>

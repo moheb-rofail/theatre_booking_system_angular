@@ -1,22 +1,40 @@
 <main class="main-content">
+  @if (loading) {
+  <div class="loading-message">
+    <p>Loading movies...</p>
+  </div>
+  } @else if (error) {
+  <div class="error-message">
+    <p>{{ error }}</p>
+  </div>
+  } @else if (films.length === 0) {
+  <div class="no-movies-message">
+    <p>No movies available at the moment.</p>
+  </div>
+  } @else {
   <div class="film-list">
     @for (film of films; track film.id) {
-      <div class="film-card">
-        <div class="poster-container">
-          <img [src]="'http://127.0.0.1:8000/storage/' + film.poster" 
-               alt="{{ film.title }}" class="film-poster"/>
-          <div class="overlay">
-            <button (click)="selectFilm(film)">Select Film</button>
-          </div>
-        </div>
-        <div class="film-details">
-          <h3>{{ film.title }}</h3>
-          <p><strong>Description:</strong> <span>{{ film.description }}</span></p>
-          <p><strong>Type:</strong> <span>{{ film.TypeOfFilm }}</span></p>
-          <p><strong>Duration:</strong> <span>{{ film.duration }} mins</span></p>
-          <p><small>Created: {{ film.created_at | date:'medium' }}</small></p>
+    <div class="film-card">
+      <div class="poster-container">
+        @if (film.poster) {
+        <img [src]="'http://127.0.0.1:8000/storage/' + film.poster" alt="{{ film.title }}" class="film-poster"
+          (error)="onImageError($event)" />
+        } @else {
+        <img src="/default_poster.jpg" alt="{{ film.title }}" class="film-poster" (error)="onImageError($event)" />
+        }
+        <div class="overlay">
+          <button (click)="selectFilm(film)">Select Film</button>
         </div>
       </div>
+      <div class="film-details">
+        <h3>{{ film.title }}</h3>
+        <p><strong>Description:</strong> <span>{{ film.description }}</span></p>
+        <p><strong>Type:</strong> <span>{{ film.TypeOfFilm }}</span></p>
+        <p><strong>Duration:</strong> <span>{{ film.duration }} mins</span></p>
+        <p><small>Created: {{ film.created_at | date:'medium' }}</small></p>
+      </div>
+    </div>
     }
   </div>
+  }
 </main>

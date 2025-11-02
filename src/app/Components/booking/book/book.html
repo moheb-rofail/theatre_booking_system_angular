@@ -2,20 +2,46 @@
 <div class="booking-page">
     <h2>Booking for: {{ film.title }}</h2>
     <p><strong>Type:</strong> {{ film.TypeOfFilm }}</p>
+    <p><strong>Duration:</strong> {{ film.duration }} mins</p>
+    <p><strong>Show Date:</strong> {{ partyDate }}</p>
     <hr>
+
+    @if (loadingSeats) {
+    <p class="loading-text">Loading seat availability...</p>
+    } @else {
+    <div class="seats-legend">
+        <div class="legend-item">
+            <div class="legend-seat available"></div>
+            <span>Available</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-seat selected"></div>
+            <span>Selected</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-seat booked"></div>
+            <span>Booked</span>
+        </div>
+    </div>
 
     <div class="seats-grid">
         @for (seat of seats; track seat) {
-        <div 
-          class="seat" [class.selected]="selectedSeats.includes(seat)" [class.booked]="isSeatBooked(seat)" (click)="toggleSeat(seat)">
+        <div class="seat" [class.selected]="selectedSeats.includes(seat)" [class.booked]="isSeatBooked(seat)"
+            (click)="toggleSeat(seat)">
             {{ seat }}
         </div>
         }
     </div>
 
+    <div class="selected-seats-info">
+        <p>Selected: {{ selectedSeats.length }} seat(s)</p>
+        <p>Total Price: ${{ selectedSeats.length * seatPrice }}</p>
+    </div>
+
     <button (click)="confirmBooking()" [disabled]="selectedSeats.length === 0">
-        Confirm Booking
+        Continue Booking
     </button>
+    }
 </div>
 } @else {
 <p>Loading film details...</p>

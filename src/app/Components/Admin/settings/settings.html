@@ -1,25 +1,41 @@
-<div class="container">
+<div class="settings-container">
     <h2>Settings</h2>
-<form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
-    <div class="form-group">
-        <label for="ticket_price">Ticket Price</label>
-        <input type="number" class="form-control" formControlName="ticket_price" placeholder="Ticket Price" />
-    </div>
 
-    <div class="form-group">
-        <label for="popcorn_price">PopCorn Price</label>
-        <input type="number" class="form-control" formControlName="popcorn_price" placeholder="Popcorn Price" />
+    @if (successMessage) {
+    <div class="alert alert-success">
+        {{ successMessage }}
     </div>
+    }
 
-    <div class="form-group">
-        <label for="cola_price">Cola Price</label>
-        <input type="number" class="form-control" formControlName="cola_price" placeholder="Cola Price" />
+    @if (errorMessage) {
+    <div class="alert alert-danger">
+        {{ errorMessage }}
     </div>
+    }
 
-    <div class="form-group">
-        <label for="total_seats">Total Seats</label>
-        <input type="number" class="form-control" formControlName="total_seats" placeholder="Total Seats" />
-    </div>
-    <button type="submit">Save</button>
-</form>
+    <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" class="settings-form">
+        <div class="form-group">
+            <label for="ticket_price">💰 Ticket Price (EGP)</label>
+            <input type="number" class="form-control" formControlName="ticket_price" placeholder="Enter ticket price" />
+        </div>
+
+        <div class="form-group">
+            <label for="popcorn_price">🍿 Popcorn Price (EGP)</label>
+            <input type="number" class="form-control" formControlName="popcorn_price"
+                placeholder="Enter popcorn price" />
+        </div>
+
+        <div class="form-group">
+            <label for="drink_price">🥤 Drink Price (EGP)</label>
+            <input type="number" class="form-control" formControlName="drink_price" placeholder="Enter drink price" />
+        </div>
+
+        <div class="form-group">
+            <label for="chocolate_price">🍫 Chocolate Price (EGP)</label>
+            <input type="number" class="form-control" formControlName="chocolate_price"
+                placeholder="Enter chocolate price" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">💾 Save Settings</button>
+    </form>
 </div>

@@ -6,7 +6,7 @@ import { Book } from './Components/booking/book/book';
 import { Settings } from './Components/Admin/settings/settings';
 import { Extras } from './Components/booking/extras/extras';
 import { Summary } from './Components/booking/summary/summary';
-import { Success } from '../../success/success';
+import { Success } from './Components/booking/success/success';
 import { Register } from './Components/Auth/register/register';
 import { Login } from './Components/Auth/login/login';
 import { Logout } from './Components/Auth/logout/logout';

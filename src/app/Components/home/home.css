@@ -4,7 +4,10 @@
   box-sizing: border-box;
 }
 
-html, body, app-root, main {
+html,
+body,
+app-root,
+main {
   height: 100%;
   min-height: 100vh;
   width: 100%;
@@ -76,7 +79,7 @@ app-root {
   background-color: #121212;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   display: flex;
@@ -85,7 +88,7 @@ app-root {
 
 .film-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 30px rgba(0,0,0,0.9);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.9);
 }
 
 .poster-container {
@@ -138,7 +141,7 @@ app-root {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: auto; 
+  margin-top: auto;
   flex: 1;
 }
 
@@ -181,4 +184,31 @@ app-root {
   text-align: center;
   display: block;
   margin-top: 6px;
+}
+
+.loading-message,
+.error-message,
+.no-movies-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  width: 100%;
+  padding: 20px;
+}
+
+.loading-message p,
+.error-message p,
+.no-movies-message p {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+.error-message p {
+  color: #ff5722;
+}
+
+.no-movies-message p {
+  color: #9e9e9e;
 }
