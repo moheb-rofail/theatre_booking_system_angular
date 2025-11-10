@@ -29,11 +29,13 @@ export class Booking {
 
   addBooking(data: any): Observable<any> {
     console.log('Sending booking: ', data);
-    return this.http.post(`http://127.0.0.1:8000/api/bookings/`, data);
+    // Removed withCredentials: true - using token-based auth (Bearer tokens) instead of session-based
+    return this.http.post('http://127.0.0.1:8000/api/bookings', data);
   }
 
   deleteBooking(id: number): Observable<any> {
     console.log('Deleting booking with ID:', id);
+    // Token-based auth - no need for withCredentials
     return this.http.delete(`http://127.0.0.1:8000/api/bookings/${id}`);
   }
 
